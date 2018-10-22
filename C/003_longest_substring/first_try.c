@@ -43,16 +43,17 @@ int lengthOfLongestSubstring(char* s)
 		}
 		if (current_length > max_length_count)
 			max_length_count = current_length;
-		current_length = 0;
-		for (int j = 0; j <= i; ++j)
-			indexes[j] = 0;
+		current_length = 1;
+		for (int j = 0; j < SIZE; ++j)
+			indexes[j] = -1;
+		insert((key - '0'), indexes);
 	}
-	return max_length_count;
+	return max_length_count < current_length ? current_length: max_length_count;
 }
 
 int main(void)
 {
-	int number = lengthOfLongestSubstring("hijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789hijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789hijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789hijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789hijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789hijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789");
+	int number = lengthOfLongestSubstring("dvadfrg");
 	printf("%d\n", number);
 	return 0;
 }
