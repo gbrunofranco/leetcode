@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#define SIZE 30000
+#define SIZE 100
 
 int hash (int key)
 {	
