@@ -35,7 +35,6 @@ double findMedianSortedArrays(int* nums1, int nums1Size, int* nums2, int nums2Si
 		int val2 = nums3[(int)(nums3Size/2) - 1];
 		return (val1+(float)val2)/2;
 	}
-	printf("%d\n", nums3[nums3Size/2]);
 	return nums3[nums3Size/2];
 }
 
