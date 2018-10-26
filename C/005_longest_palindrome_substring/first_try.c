@@ -45,14 +45,15 @@ char* longestPalindrome(char* s) {
 	int *values = malloc(sizeof(int)*SIZE);
 	int i = s_length%2, start = s_length/2;
 	int k;
-	int max = start + i, count = 0, j, steps = 0;
+	int max = start + 1, count = 0, j, steps = 0;
+	int origin = start, counter;
 	if(!i)
 		start--;
 	for (j = 0; j < SIZE; ++j)
 		values[j] = -1;
 	do {
-		int counter = 0;
-		printf("%d\n", start);
+		counter = 0;
+		printf("s:%d, m:%d\n", start, max);
 		for (j = 0; j < max; ++j)
 			if(insert (s[start-j], keys, j, values)) {}
 		for (j = 0; j < max; j++)
@@ -66,24 +67,32 @@ char* longestPalindrome(char* s) {
 			count = 1;
 			steps++;
 			start-=steps;
-			max--;
 		}
 		else {
-			rmv(keys, values);
+			if(((max + start) > strlen(s)) || start < 0) {
+				printf("M:%d S:%d\n", max, start);
+				max--;
+				steps = 0;
+				start = origin;
+			}
+			else{
+			steps++;
+			start += steps;
 			count = 0;
-			start += steps;
-			start += steps;
-		}
+			rmv(keys, values);
+		}}
 	}while(max > 1);
-	char *lps = malloc(sizeof(char)*(max));
-	for (k = start, j = max-1; j >=0; --k, --j)
+	char *lps = malloc(sizeof(char)*(2*max));
+	for (k = start - !i, j = counter - i, i = !i; j >=0; --k, --j, i+=2) {
 		lps[j] = s[k];
+		lps[j+i] = s[k];
+	}
 	return lps;
 }
 int main()
 {
 	char *string = malloc(sizeof(char)*5);
-	string = "reabcba";
+	string = "raaaaaabba";
 	char *lps = longestPalindrome(string);
 	printf("%s of len %ld\n", lps, strlen(lps));
 	return 0;
