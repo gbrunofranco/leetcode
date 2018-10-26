@@ -8,31 +8,36 @@ int hash (char key)
 	return index < 0 ? index + SIZE : index;
 }
 
-int search (char *keys, char key, int *values) 
+int search (char key, char *keys, int value, int *values)
 {
-	int index = hash (key);
-	if (keys[index] == key)
-		return values[index];
+	int index = hash(key);
+	while (keys[index] == key) {
+		if (values[index] == value) {
+			return 1;
+		}
+		index++;
+		index %= SIZE;
+	}
 	return 0;
 }
-
 int insert (char key, char *keys, int value, int *values)
 {
 	int index = hash(key);
-	if (keys[index] == key)
-		return 0;
-	else
-	{
-		keys[index] = key;
-		values[index] = value;
+	while (values[index] != -1) {
+		index++;
+		index %= SIZE;
 	}
+	keys[index] = key;
+	values[index] = value;
 	return 1;
 }
-void rmv (char key, char *keys, int *values)
+void rmv (char *keys, int *values)
 {
-	int index = hash(key);
-	keys[index] = '4';
-	values[index] = -2;
+	for (int i = 0; i < SIZE; ++i)
+	{
+		keys[i] = '/';
+		values[i] = -1;
+	}
 }
 char* longestPalindrome(char* s) {
 	int s_length = strlen(s);
@@ -43,27 +48,28 @@ char* longestPalindrome(char* s) {
 	int max = start + i, count = 0, j, steps = 0;
 	if(!i)
 		start--;
+	for (j = 0; j < SIZE; ++j)
+		values[j] = -1;
 	do {
 		int counter = 0;
+		printf("%d\n", start);
 		for (j = 0; j < max; ++j)
 			if(insert (s[start-j], keys, j, values)) {}
 		for (j = 0; j < max; j++)
-			if(!(insert (s[start+j], keys, j, values))) {
-			counter++;}
+			if((search (s[start+j], keys, j, values))) {
+				counter++;}
 		if (counter == max)			
 			break;
 		if (!count)
 		{
-			for (int k = start; k >= start - max; --k)
-				rmv(s[k], keys, values);
+			rmv(keys, values);
 			count = 1;
 			steps++;
-			start--;
+			start-=steps;
 			max--;
 		}
 		else {
-			for (int k = start; k >= start - max; --k)
-				rmv(s[k], keys, values);
+			rmv(keys, values);
 			count = 0;
 			start += steps;
 			start += steps;
@@ -77,7 +83,7 @@ char* longestPalindrome(char* s) {
 int main()
 {
 	char *string = malloc(sizeof(char)*5);
-	string = "rrrrrrrrrrrrabcba";
+	string = "reabcba";
 	char *lps = longestPalindrome(string);
 	printf("%s of len %ld\n", lps, strlen(lps));
 	return 0;
