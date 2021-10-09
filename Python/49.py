@@ -6,13 +6,12 @@ class Solution:
     def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
         dictionary = dict()
         for string in strs:
-            s_string = sorted(string)
-            s_string = "".join(s_string)
+            s_string = "".join(sorted(string))
             if s_string not in dictionary:
                 dictionary[s_string] = [string]
             else:
                 dictionary[s_string].append(string)
-        return list(dictionary.values())
+        return dictionary.values()
 
 
 if __name__ == "__main__":
@@ -28,6 +27,6 @@ if __name__ == "__main__":
                 break
     assert count == len(sol)
 
-    assert ex.groupAnagrams([""]) == [[""]]
+    assert list(ex.groupAnagrams([""])) == [[""]]
 
-    assert ex.groupAnagrams(["a"]) == [["a"]]
+    assert list(ex.groupAnagrams(["a"])) == [["a"]]
