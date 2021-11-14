@@ -1,0 +1,21 @@
+#!/bin/env sh
+REGEX1="^(feat|fix|test): time O\((N?(log){1,2}N|N\^[1-9]|1|N!?|2\^N)\) [0-9]+ms [0-9][0-9]\.[0-9][0-9]%, memory O\((N?(log){1,2}N|N\^[1-9]|1|N!?|2\^N)\) [0-9]+\.[0-9]+MB [0-9][0-9]\.[0-9][0-9]%"
+# Feat for new implementations, fix for fix to previous implementations and test for uncomplete problems
+REGEX2="^(merge): [a-zA-Z0-9]+$"
+REGEX3="^(other): .+"
+accepted=0
+
+if [[ $(cat $1) =~ $REGEX1 ]] || [[ $(cat $1) =~ $REGEX2 ]] || [[ $(cat $1) =~ $REGEX3 ]];
+then
+    accepted=1
+fi  
+
+if [[ $accepted -eq 0 ]];
+then
+    echo >&2 "Commit message $(cat $1) invalid"
+    echo >&2 "It must be something along the lines of feat: time O(NlogN) 18ms 10.10%, memory O(N^2) 18.2MB 15.12%"
+    echo >&2 "or: merge: with branch branchname"
+    exit 1
+else
+    echo >&2 "Commit message looks good. Proceeding..."
+fi
