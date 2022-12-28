@@ -1,5 +1,5 @@
 #!/bin/env sh
-REGEX1="^(feat|fix|test): time O\((N?(log){1,2}N|N\^[1-9]|1|N!?|2\^N)\) [0-9]+ms [0-9][0-9]\.[0-9][0-9]%, memory O\((N?(log){1,2}N|N\^[1-9]|1|N!?|2\^N)\) [0-9]+\.[0-9]+MB [0-9][0-9]\.[0-9][0-9]%"
+REGEX1="^(feat|fix|test): time O\((N?(log){1,2}N|N\^[1-9]|1|N!?|2\^N)\) [0-9]+ms 0|[1-9][0-9]|100\.[0-9][0-9]%, memory O\((N?(log){1,2}N|N\^[1-9]|1|N!?|2\^N)\) [0-9]+\.[0-9]+MB 0|[1-9][0-9]|100\.[0-9][0-9]%"
 # Feat for new implementations, fix for fix to previous implementations and test for uncomplete problems
 REGEX2="^(merge): [a-zA-Z0-9]+$"
 REGEX3="^(other): .+"
